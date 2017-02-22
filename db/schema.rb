@@ -13,16 +13,19 @@
 ActiveRecord::Schema.define(version: 20170222174136) do
 
   create_table "categories", force: :cascade do |t|
-    t.string  "title"
-    t.integer "external_code"
+    t.string   "title"
+    t.integer  "external_code"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "jobs", force: :cascade do |t|
     t.string   "partner_id"
-    t.integer  "categories_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["categories_id"], name: "index_jobs_on_categories_id"
+    t.integer  "category_id"
+    t.date     "expired_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["category_id"], name: "index_jobs_on_category_id"
     t.index ["partner_id"], name: "index_jobs_on_partner_id", unique: true
   end
 
