@@ -6,6 +6,7 @@ gem "rake"
 gem 'will_paginate', '~> 3.0.5'
 gem 'sidekiq'
 gem 'httparty'
+gem 'foreman'
 
 group :development do
   gem "shotgun", '0.9.1'

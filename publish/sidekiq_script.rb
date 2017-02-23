@@ -1,1 +1,1 @@
-require './workers/import_jobs_worker'
+require_relative './workers/import_jobs_worker'
