@@ -10,10 +10,17 @@ require 'capybara/dsl'
 require 'database_cleaner'
 
 module TestHelpers
+	DatabaseCleaner.strategy = :transaction
+	DatabaseCleaner.clean_with(:truncation)
   include Capybara::DSL
 
+  def before_setup
+    super
+    DatabaseCleaner.clean 
+    DatabaseCleaner.start    
+  end
+
   def before
-    DatabaseCleaner.clean
     DatabaseCleaner.start
     super
   end
