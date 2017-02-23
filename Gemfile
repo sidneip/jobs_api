@@ -4,6 +4,8 @@ gem 'sinatra-activerecord'
 gem "sqlite3"
 gem "rake"
 gem 'will_paginate', '~> 3.0.5'
+gem 'sidekiq'
+gem 'httparty'
 
 group :development do
   gem "shotgun", '0.9.1'
