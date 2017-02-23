@@ -8,7 +8,7 @@ require_relative "../models/category"
 require_relative "../models/job"
 
 # SERVICES
-require "./services/job_service"
+require "./services/category_service"
 require 'will_paginate'
 require 'will_paginate/active_record'
 
@@ -21,10 +21,8 @@ class CategoriesController < Sinatra::Base
     content_type :json
   end
 
-  get '/' do
-    @categories = Category
-             .order(updated_at: :desc)
-             .paginate(page: params[:page], per_page: per_page)
+  get '/:id' do
+    @categories = CategoryService.new(params[:id]).calculate
     @categories.to_json
   end
 
