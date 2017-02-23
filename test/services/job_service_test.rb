@@ -30,7 +30,7 @@ class JobServiceTest < Minitest::Test
   end
 
   def test_not_duplicate_existent_job_by_partner_id
-    job = Job.where(partner_id: @job_params['partner_id']).take
+    job =  JobService.new(@job_params).save
     job2 = JobService.new(@job_params).save
     assert_equal job.id, job2.id
   end

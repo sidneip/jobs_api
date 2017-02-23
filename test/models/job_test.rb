@@ -31,6 +31,18 @@ class JobTest < Minitest::Test
     end
   end
 
+  def test_new_job_default_status_draft
+    job = Job.create(category_id: @category.id, expired_at: DateTime.now + 1.day, partner_id: 9988)
+    assert_equal 'draft', job.status
+  end
+
+  def test_activate_job
+    job_new = Job.create(category_id: @category.id, expired_at: DateTime.now + 1.day, partner_id: 991210)
+    job_new.save
+    job_new.activate!
+    assert_equal 'active', job_new.reload.status
+  end
+
   def test_partner_id_is_unique
     job = Job.create(category_id: @category.id, expired_at: DateTime.now + 1.day, partner_id: 1234189)
     job2 = Job.create(category_id: @category.id, expired_at: DateTime.now + 1.day, partner_id: 1234189)
