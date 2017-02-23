@@ -5,6 +5,7 @@ class CreateJobs < ActiveRecord::Migration[5.0]
       t.index :partner_id, unique: true
       t.references :category
       t.date :expired_at
+      t.integer :status, default: 0
       t.timestamps
     end
   end

@@ -4,9 +4,11 @@ require "json"
 require 'byebug'
 
 # MODELS
-require "./models/category"
-require "./models/job"
+require_relative "../models/category"
+require_relative "../models/job"
 
+# SERVICES
+require "./services/job_service"
 require 'will_paginate'
 require 'will_paginate/active_record'
 
@@ -14,21 +16,26 @@ class JobsApplication < Sinatra::Base
   register Sinatra::ActiveRecordExtension
 
   set :method_override, true
-
+  set :database_file, '../config/database.yml'
   before do
     content_type :json
   end
 
-  get '/jobs' do
+  get '/' do
     @posts = Job
              .order(updated_at: :desc)
              .paginate(page: params[:page], per_page: per_page)
     @posts.to_json
   end
 
-  post '/jobs' do
-    job_service = JobService.new(job_params).create
-    job_service.to_json
+  post '/' do
+    @job_service = JobService.new(job_params).save
+    @job_service.to_json
+  end
+
+  post "/:id/activate" do
+    @job = Job.find params["id"]
+    @job.activate!
   end
 
   def per_page
@@ -42,7 +49,7 @@ class JobsApplication < Sinatra::Base
       'partner_id',
       'expired_at',
       'title',
-      'category_external_code'
+      'category_external_code',
     )
   end
 

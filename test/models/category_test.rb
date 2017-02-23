@@ -1,6 +1,7 @@
 require File.expand_path(File.join('..', 'test_helper'), __dir__)
 
 class CategoryTest < Minitest::Test
+  include TestHelpers
   def test_instance_category
     category = Category.new
     assert_instance_of Category, category

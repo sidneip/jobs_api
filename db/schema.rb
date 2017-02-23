@@ -23,8 +23,9 @@ ActiveRecord::Schema.define(version: 20170222174136) do
     t.string   "partner_id"
     t.integer  "category_id"
     t.date     "expired_at"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "status",      default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.index ["category_id"], name: "index_jobs_on_category_id"
     t.index ["partner_id"], name: "index_jobs_on_partner_id", unique: true
   end

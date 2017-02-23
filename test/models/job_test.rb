@@ -1,8 +1,9 @@
 require File.expand_path(File.join('..', 'test_helper'), __dir__)
 
 class JobTest < Minitest::Test
+  include TestHelpers
   def setup
-    @category = Category.create(title: 'Test', external_code: 123456)
+    @category = Category.find_or_create_by(title: 'Test', external_code: 123456)
   end
 
   def test_instance_job
@@ -14,5 +15,26 @@ class JobTest < Minitest::Test
     Job.create(category_id: @category.id, expired_at: DateTime.now, partner_id: 123456)
     job = Job.where(partner_id: 123456).take
     assert job
+  end
+
+  def test_error_create_job_expired
+    job = Job.create(category_id: @category.id, expired_at: DateTime.now - 1.day, partner_id: 1234189)
+    job.valid?
+    assert_equal("job expired", job.errors.messages[:expired_at][0])
+  end
+
+  def test_save_invalid_job
+    assert_raises ActiveRecord::RecordInvalid do
+      2.times do |t|
+        job = Job.create!(category_id: @category.id, expired_at: DateTime.now - 1.day, partner_id: 123456)
+      end
+    end
+  end
+
+  def test_partner_id_is_unique
+    job = Job.create(category_id: @category.id, expired_at: DateTime.now + 1.day, partner_id: 1234189)
+    job2 = Job.create(category_id: @category.id, expired_at: DateTime.now + 1.day, partner_id: 1234189)
+    job2.valid?
+    assert_equal("has already been taken", job2.errors.messages[:partner_id][0])
   end
 end

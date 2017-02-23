@@ -1,5 +1,5 @@
 class JobService
-  attr_acessor :partner_id, :title, :category_external_code, :expired_at
+  attr_accessor :partner_id, :title, :category_external_code, :expired_at, :id
 
   def initialize(params = {})
     params.each do |k, v|
@@ -8,15 +8,20 @@ class JobService
   end
 
   def save
-    find_or_create_category
+    category = find_or_create_category
     Job
       .create_with(
         category_id: category.id,
         expired_at: expired_at
       )
-      .find_or_create_by(
+      .find_or_create_by!(
         partner_id: partner_id
       )
+  end
+
+  def activate
+    job = Job.find id
+    job.activate!
   end
 
   private

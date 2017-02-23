@@ -1,7 +1,7 @@
 require 'rake/testtask'
 require "bundler/setup"
 require "sinatra/activerecord/rake"
-require "./app"
+Dir["./controllers/*.rb"].each {|file| require file }
 
 task :default => ["run:development"]
 
