@@ -1,6 +1,6 @@
+#encoding: utf-8
 require 'sidekiq'
 require 'csv'
-require 'byebug'
 require_relative '../job'
 
 class ImportJobsWorker
