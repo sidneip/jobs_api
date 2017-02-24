@@ -1,3 +1,11 @@
+require 'simplecov'
+SimpleCov.start do
+  add_filter 'test'
+  add_group 'Models', 'models'
+  add_group 'Controllers', 'controllers'
+  add_group 'Services', 'services'
+end
+
 ENV['RACK_ENV'] = 'test'
 
 require File.expand_path(File.join(__dir__, '..', 'controllers/' 'application_controller.rb'))
@@ -9,6 +17,10 @@ require 'rack/test'
 require 'capybara'
 require 'capybara/dsl'
 require 'database_cleaner'
+require 'byebug'
+require "minitest/reporters"
+
+Minitest::Reporters.use!
 
 module TestHelpers
 	DatabaseCleaner.strategy = :transaction

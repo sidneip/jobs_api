@@ -1,5 +1,5 @@
 require File.expand_path(File.join('..', 'test_helper'), __dir__)
-class JobsControllerTest < MiniTest::Unit::TestCase
+class JobsControllerTest < Minitest::Test
 
   include Rack::Test::Methods
 

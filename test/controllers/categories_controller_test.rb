@@ -1,6 +1,6 @@
 require File.expand_path(File.join('..', 'test_helper'), __dir__)
 
-class CategoriesControllerTest < MiniTest::Unit::TestCase
+class CategoriesControllerTest < Minitest::Test
   def setup
     @category = Category.create(title: 'dev', external_code: 919821)
   end

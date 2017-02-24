@@ -20,4 +20,6 @@ group :test do
   gem 'minitest'
   gem 'database_cleaner'
   gem 'rack-test', require: 'rack/test'
+  gem 'simplecov'
+  gem 'minitest-reporters'
 end

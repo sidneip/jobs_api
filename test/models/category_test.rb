@@ -18,7 +18,7 @@ class CategoryTest < Minitest::Test
   end
 
   def test_show_error_duplicate_category_by_external_code
-    category = Category.create(title: 'teste', external_code: '0909')
+    Category.create(title: 'teste', external_code: '0909')
     category2 = Category.new(title: 'teste', external_code: '0909')
     category2.valid?
     assert category2.errors.messages[:external_code].include?("has already been taken")
