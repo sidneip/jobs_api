@@ -1,25 +1,4 @@
-require "sinatra/base"
-require "sinatra/activerecord"
-require "json"
-
-# MODELS
-require_relative "../models/category"
-require_relative "../models/job"
-
-# SERVICES
-require "./services/job_service"
-require 'will_paginate'
-require 'will_paginate/active_record'
-
-class JobsApplication < Sinatra::Base
-  register Sinatra::ActiveRecordExtension
-
-  set :method_override, true
-  set :database_file, '../config/database.yml'
-  before do
-    content_type :json
-  end
-
+class JobsApplication < ApplicationController
   get '/' do
     @jobs = Job
              .order(updated_at: :desc)
@@ -42,13 +21,8 @@ class JobsApplication < Sinatra::Base
     @job.activate!
   end
 
-  def per_page
-    params[:per_page] || 10
-  end
-
   def job_params
-    params = JSON.parse(request.body.read)
-    params.slice(
+    req_params.slice(
       'category_id',
       'partner_id',
       'expired_at',
@@ -56,5 +30,4 @@ class JobsApplication < Sinatra::Base
       'category_external_code',
     )
   end
-
 end

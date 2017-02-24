@@ -1,5 +1,6 @@
 require "sinatra/base"
 
+require File.expand_path '../controllers/application_controller.rb', __FILE__
 require File.expand_path '../controllers/jobs_controller.rb', __FILE__
 require File.expand_path '../controllers/categories_controller.rb', __FILE__
 
