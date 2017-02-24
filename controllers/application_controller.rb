@@ -31,6 +31,6 @@ class ApplicationController < Sinatra::Base
   end
 
   def req_params
-    params = JSON.parse(request.body.read) rescue {}
+    JSON.parse(request.body.read) rescue {}
   end
 end
