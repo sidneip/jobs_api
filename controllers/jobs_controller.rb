@@ -21,6 +21,7 @@ class JobsApplication < ApplicationController
     @job.activate!
   end
 
+  private
   def job_params
     req_params.slice(
       'category_id',

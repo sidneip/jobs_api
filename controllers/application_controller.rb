@@ -22,11 +22,15 @@ class ApplicationController < Sinatra::Base
     content_type :json
   end
 
+  def authenticate!
+    halt 403 if req_params['token'] != '123abc'
+  end
+
   def per_page
-    params[:per_page] || 10
+    params['per_page'] || 10
   end
 
   def req_params
-    params = JSON.parse(request.body.read)
+    params = JSON.parse(request.body.read) rescue {}
   end
 end

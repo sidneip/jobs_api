@@ -1,4 +1,5 @@
 require File.expand_path(File.join('..', 'test_helper'), __dir__)
+
 class CategoriesControllerTest < MiniTest::Unit::TestCase
   def setup
     @category = Category.create(title: 'dev', external_code: 919821)
@@ -12,6 +13,6 @@ class CategoriesControllerTest < MiniTest::Unit::TestCase
 
   def test_index_status_200
     get "/#{@category.id}"
-    assert last_response.ok?
+    assert_equal 403, last_response.status
   end
 end
