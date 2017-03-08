@@ -46,4 +46,25 @@ module TestHelpers
   def self.included(_)
     Capybara.app, _ = Rack::Builder.parse_file(File.expand_path(File.join(__dir__, '..', 'config.ru')))
   end
+
+  def json_parse(body)
+    JSON.parse(body) rescue {}
+  end
+
+  def get_json(path, method = 'get')
+    body = send(method, path).body
+    json_parse(body)
+  end
+
+  def create_multiple_jobs(number)
+    number.times do |t|
+      job_params = {
+        'category_external_code' => 12332110,
+        "partner_id" => "12332111#{t}",
+        'title' => 'dev',
+        'expired_at' => DateTime.now + 10
+      }
+      JobService.new(job_params).save
+    end
+  end
 end
